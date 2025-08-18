@@ -51,8 +51,8 @@ export default [
     },
     {
         id: 6,
-        nome: "Cedrico Giggory",
-        cassa: "Lufa-Lufa",
+        nome: "Cedrico diggory",
+        casa: "Lufa-Lufa",
         ano: 7,
         varinha: "Freixo e pelo de unicórnio, 32cm",
         mascote: "Nenhum",
