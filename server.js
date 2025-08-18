@@ -45,6 +45,62 @@ app.get("/bruxos", (req, res) => {
     res.json(bruxos);
 });
 
+//Rota GET by ID
+app.get("/bruxos/:id", (req, res) => {
+  //Pega o ID da URL e transforma em número
+  const id = parseInt(req.params.id);
+
+  //Busca o bruxo no array/objeto/json
+  const bruxo = bruxos.find(b => b.id === id);
+
+  //Verificar se existe e se existir, retornar o status 200 e o res
+  if (bruxo) {
+    res.status(200).json(bruxo);
+  } else {
+    //Se não existir, enviar na resposta um feedback e o status 404
+    res.status(404).json({
+      mensagem: "Bruxo não encontrado!"
+    });
+  }
+});
+
+//Rota GET by Name
+app.get("/bruxos/nome/:nome", (req, res) => {
+  //Pega o nome da URL
+  let nome = req.params.nome.toLowerCase();
+
+  //Burca no array/objeto/json usando "contains"
+  const bruxosEncontrados = bruxos.filter(b => b.nome.toLowerCase().includes(nome));
+
+  //Verificar se existe e se existir, retornar o status 200 e o res
+  if (bruxosEncontrados.length > 0) {
+    res.status(200).json(bruxosEncontrados);  
+  } else {
+     //Se não existir, enviar na resposta um feedback e o status 404
+    res.status(404).json({
+      mensagem: "Bruxo(s) não encontrado(s)!"
+    });
+  }
+});
+
+//Rota GET by Casa
+app.get("/bruxos/casa/:casa", (req, res) => {
+    // Pegar a casa da url
+    let casa = req.params.casa;
+    // Buscar no array/objeto/json
+    const bruxosDaCasa = bruxos.filter(b => b.casa === casa);
+
+    if (bruxosDaCasa.length > 0) {
+        // Se existir enviar na resposta com o res e o status 200
+        res.status(200).json(bruxosDaCasa);
+    } else {
+        // Se nao existir, enviar na resposta um feedback e o status 400
+        res.status(404).json({
+            mensagem: "Nenhum bruxo encontrado nessa casa!"
+        });
+    }
+});
+
 // Iniciar servidor
 app.listen(serverPort, () => {
   console.log(`⚡ Servidor Hogwarts iniciado em: http://localhost:${serverPort}`);
