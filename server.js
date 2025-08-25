@@ -105,6 +105,18 @@ app.get("/bruxos/casa/:casa", (req, res) => {
   }
 });
 
+app.get("/bruxos/vivos/nao", (req, res) => {
+  const resultado = bruxos.filter((b) => !b.status);
+
+  if (resultado) {
+    res.status(200).json(resultado);
+  } else {
+    res.status(404).json({
+      mensagem: "Nenhum bruxo morto encontrado!"
+    });
+  }
+});
+
 app.get("/casas", (req, res) => {
   if (casas.length > 0) {
     res.status(200).json(casas);
@@ -126,21 +138,61 @@ app.get("/varinhas", (req, res) => {
 });
 
 app.get("/animais", (req, res) => {
-  if (animais.length > 0){
+  if (animais.length > 0) {
     res.status(200).json(animais);
   } else {
     res.status(404).json({
-      mensagem: "Nenhum animal enccontrado!"
+      mensagem: "Nenhum animal enccontrado!",
     });
   }
 });
 
 app.get("/pocoes", (req, res) => {
-  if (pocoes.length > 0){
+  if (pocoes.length > 0) {
     res.status(200).json(pocoes);
   } else {
     res.status(404).json({
-      mensagem: "Nenhuma poção encontrada!"
+      mensagem: "Nenhuma poção encontrada!",
+    });
+  }
+});
+
+app.get("/varinhas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const varinhaEncontrada = varinhas.find((v) => v.id === id);
+
+  if (varinhaEncontrada) {
+    res.status(200).json(varinhaEncontrada);
+  } else {
+    res.status(404).json({
+      mensagem: "Nenhuma varinha encontrada com esse ID!",
+    });
+  }
+});
+app.get("/animais/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const animalEncontrado = animais.find((a) => a.id === id);
+
+  if (animalEncontrado) {
+    res.status(200).json(animalEncontrado);
+  } else {
+    res.status(404).json({
+      mensagem: "Nenhum animal encontrado com esse ID!",
+    });
+  }
+});
+app.get("/pocoes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const pocoesEncontradas = pocoes.find((p) => p.id === id);
+
+  if (pocoesEncontradas) {
+    res.status(200).json(pocoesEncontradas);
+  } else {
+    res.status(404).json({
+      mensagem: "Nenhuma poção encontrada com esse ID!",
     });
   }
 });
@@ -150,5 +202,5 @@ app.listen(serverPort, () => {
   console.log(
     `⚡ Servidor Hogwarts iniciado em: http://localhost:${serverPort}`
   );
-  console.log(`🧙‍♂️ API dos Bruxos está no ar na porta 3000!`);
+  console.log(`🧙‍♂️ API dos Bruxos está no ar na porta ${serverPort}!`);
 });
